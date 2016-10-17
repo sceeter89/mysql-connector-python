@@ -968,6 +968,12 @@ class MySQLConnectionAbstract(object):
         """Resets the session state without re-authenticating"""
         raise NotImplementedError
 
+    def __enter__(self):
+        return self
+        
+    def __exit__(self ,type, value, traceback):
+        self.close()
+
 
 @make_abc(ABCMeta)
 class MySQLCursorAbstract(object):
@@ -1156,3 +1162,9 @@ class MySQLCursorAbstract(object):
     def fetchwarnings(self):
         """Returns Warnings."""
         return self._warnings
+
+    def __enter__(self):
+        return self
+        
+    def __exit__(self ,type, value, traceback):
+        self.close()

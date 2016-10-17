@@ -131,6 +131,12 @@ class PooledMySQLConnection(object):
         """Return the name of the connection pool"""
         return self._cnx_pool.pool_name
 
+    def __enter__(self):
+        return self
+        
+    def __exit__(self ,type, value, traceback):
+        self.close()
+
 
 class MySQLConnectionPool(object):
     """Class defining a pool of MySQL connections"""

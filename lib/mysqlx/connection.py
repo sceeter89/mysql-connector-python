@@ -191,6 +191,12 @@ class Connection(object):
         self.protocol.send_close()
         self.protocol.read_ok()
         self.stream.close()
+    
+    def __enter__(self):
+        return self
+        
+    def __exit__(self ,type, value, traceback):
+        self.close()
 
 
 class XConnection(Connection):
@@ -361,6 +367,12 @@ class BaseSession(object):
 
     def close(self):
         self._connection.close()
+
+    def __enter__(self):
+        return self
+        
+    def __exit__(self ,type, value, traceback):
+        self.close()
 
 
 class XSession(BaseSession):
